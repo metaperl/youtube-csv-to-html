@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "youtube-csv-to-html"
+version = "0.1.0"
+description = "Convert a CSV of liked Youtube Videos to a browseable HTML file."
+authors = ["Terrence Brannon <terrence.brannon@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "youtube_csv_to_html"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pytube = "^12.1.2"
+traitlets = "^5.9.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
