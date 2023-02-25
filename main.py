@@ -22,8 +22,8 @@ class Video(HasTraits):
         return video_title
 
     @default('video_html_link')
-    def video_html_link(self):
-        return f"""<a href="{self.video_url()}">{self.video_title()}</a>"""
+    def _video_html_link(self):
+        return f"""<li> <a href="{self.video_url()}">{self.video_title()}</a> """
 
 
 class App(Application):
@@ -31,17 +31,24 @@ class App(Application):
     def start(self):
         with open('liked-videos.csv') as csv_file:
             csv_reader = csv.reader(csv_file)
-            with open('liked-videos.html', 'w') as html_out:
+            csv_out_file = open('out.csv', 'w', encoding="utf-8", newline='')
+            csv_writer = csv.writer(csv_out_file)
+            with open('out.html', 'w', encoding="utf-8") as html_out:
                 for row_index, row in enumerate(csv_reader):
-                    if i == 0:
+                    if row_index == 0:
                         continue
                     logger.debug(f"creating video instance from {row_index=}, {row[0]}")
                     v = Video(video_id=row[0])
 
-                    logger.debug(f"{v.video_id=}, {v.video_url()} ")
+                    logger.debug(f"{row_index=}: {v.video_id=}, {v.video_url()} ")
                     logger.debug(f"\t{v.video_title()}")
 
-                    html_out.write(f"{v.video_url}")
+                    result = v.video_html_link
+
+                    logger.debug(f"\t\t{result}")
+
+                    html_out.write(f"{result}\n")
+                    csv_writer.writerow((row_index, v.video_title(), v.video_url()))
 
 
 if __name__ == "__main__":
