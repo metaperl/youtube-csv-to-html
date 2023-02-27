@@ -37,6 +37,10 @@ class App(Application):
                 for row_index, row in enumerate(csv_reader):
                     if row_index == 0:
                         continue
+
+                    if not row:
+                        continue
+
                     logger.debug(f"creating video instance from {row_index=}, {row[0]}")
                     v = Video(video_id=row[0])
 
